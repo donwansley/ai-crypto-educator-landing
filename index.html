@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Crypto Educator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 60px; padding-top: 40px; }
+        .badge { display: inline-block; background: linear-gradient(90deg, #10b981, #3b82f6); color: #fff; padding: 8px 20px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 24px; }
+        h1 { font-size: 3rem; background: linear-gradient(90deg, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .subtitle { font-size: 1.25rem; opacity: 0.9; max-width: 600px; margin: 0 auto 40px; }
+        .features { list-style: none; text-align: left; max-width: 500px; margin: 40px auto; }
+        .features li { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
+        .features li:last-child { border-bottom: none; }
+        .check { color: #10b981; font-size: 1.2rem; }
+        .form-section { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 40px; margin: 40px 0; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; opacity: 0.9; font-size: 0.9rem; }
+        .form-group input { width: 100%; padding: 14px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; font-size: 1rem; }
+        .cta-button { display: inline-block; width: 100%; background: linear-gradient(90deg, #10b981, #3b82f6); color: #fff; padding: 18px 40px; border-radius: 50px; font-size: 1.1rem; font-weight: bold; border: none; cursor: pointer; }
+        .trust-badges { display: flex; justify-content: center; gap: 30px; margin-top: 30px; flex-wrap: wrap; font-size: 0.85rem; opacity: 0.8; }
+        footer { text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.6; font-size: 0.85rem; }
+        #successMessage { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">AI-Powered Education</div>
+            <h1>Understand XRP & XLM in 3 Minutes</h1>
+            <p class="subtitle">Learn how the new financial system is evolving—and where you fit into it.</p>
+        </header>
+        
+        <ul class="features">
+            <li><span class="check">✓</span> Beginner friendly — no experience needed</li>
+            <li><span class="check">✓</span> No hype — just clear explanations</li>
+            <li><span class="check">✓</span> AI educator adapts to your level</li>
+            <li><span class="check">✓</span> Free 3-minute breakdown</li>
+        </ul>
+        
+        <div class="form-section" id="formContainer">
+            <h2 style="text-align: center; margin-bottom: 10px;">Start Your Free Breakdown</h2>
+            <p style="text-align: center; opacity: 0.8; margin-bottom: 30px;">Takes less than 3 minutes</p>
+            
+            <form id="leadForm">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" name="name" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" name="phone" required placeholder="+1 (555) 000-0000">
+                </div>
+                <input type="hidden" name="source" value="ai-crypto-landing">
+                <button type="submit" class="cta-button">👉 Start AI Chat</button>
+            </form>
+            
+            <div class="trust-badges">
+                <span>✓ No spam</span>
+                <span>✓ Unsubscribe anytime</span>
+                <span>✓ Secure data</span>
+            </div>
+        </div>
+        
+        <div id="successMessage" style="text-align: center; padding: 60px 20px;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">✅</div>
+            <h2>You're In!</h2>
+            <p style="margin: 20px 0;">Check your messages—your AI educator is ready to chat.</p>
+        </div>
+        
+        <footer>
+            <p>Not financial advice. For educational purposes only.</p>
+            <p>© 2026 XRPcloud</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            try {
+                const response = await fetch('https://incipient-catheryn-unimitated.ngrok-free.dev/webhook/form-submission', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    document.getElementById('formContainer').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                } else { alert('Something went wrong. Please try again.'); }
+            } catch (err) { console.error('Error:', err); alert('Something went wrong.'); }
+        });
+    </script>
+</body>
+</html>
