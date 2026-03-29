@@ -85,18 +85,31 @@
         document.getElementById('leadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData);
+            const button = e.target.querySelector('.cta-button');
+            
+            button.disabled = true;
+            button.textContent = 'Sending...';
+            
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwJva_1Ummlb_HOCrDjRKzsMYkdVf4I7zXZxAmMwvU2e8qwZ_CAA7CzLY12fXzFqIClaQ/exec', {
+                // NO-CORS bypasses CORS preflight entirely
+                await fetch('https://script.google.com/macros/s/AKfycbwekRxzWDOkJmeXoVsLq5GU6VoCzbZ69MOUh_4Uc6oUdL3I8lRxHledt8WlxI9NIFgX7g/exec', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(data)
+                    mode: 'no-cors',
+                    body: formData
                 });
-                if (response.ok) {
+                
+                // With no-cors we can't check response, just assume success after 1s
+                setTimeout(() => {
                     document.getElementById('formContainer').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
-                } else { alert('Something went wrong. Please try again.'); }
-            } catch (err) { console.error('Error:', err); alert('Something went wrong.'); }
+                }, 500);
+                
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Something went wrong. Please try again.');
+                button.disabled = false;
+                button.textContent = '👉 Start AI Chat';
+            }
         });
     </script>
 </body>
