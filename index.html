@@ -91,14 +91,26 @@
             button.textContent = 'Sending...';
             
             try {
-                // NO-CORS bypasses CORS preflight entirely
-                await fetch('https://script.google.com/macros/s/AKfycbyD46RsoL-R2Ya48Yf8fJWX6mXos5r5tDNrlBQ7FvmJtqO8W324B5LVoBwLYgaVoDnYIg/exec', {
+                // Send to Google Sheets (original)
+                fetch('https://script.google.com/macros/s/AKfycbyD46RsoL-R2Ya48Yf8fJWX6mXos5r5tDNrlBQ7FvmJtqO8W324B5LVoBwLYgaVoDnYIg/exec', {
                     method: 'POST',
                     mode: 'no-cors',
                     body: formData
                 });
                 
-                // With no-cors we can't check response, just assume success after 1s
+                // Send to XRPcloud webhook for Telegram + Email
+                const jsonData = Object.fromEntries(formData);
+                fetch('https://funnel.xrpcloud.live/webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ...jsonData,
+                        source: 'ai-crypto-educator',
+                        captured_at: new Date().toISOString()
+                    })
+                }).catch(e => console.log('Webhook optional:', e));
+                
+                // Show success after short delay
                 setTimeout(() => {
                     document.getElementById('formContainer').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
