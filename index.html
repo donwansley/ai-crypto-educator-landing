@@ -100,7 +100,7 @@
                 
                 // Send to XRPcloud webhook for Telegram + Email
                 const jsonData = Object.fromEntries(formData);
-                fetch('https://funnel.xrpcloud.live/webhook', {
+                fetch('https://funnel.xrpcloud.live/webhook/form-submission', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
